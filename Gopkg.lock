@@ -3,6 +3,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/Gonzih/screensaver-off-go"
+  packages = ["icons"]
+  revision = "3b4984d656782a95c978bd1cb0e2e61ad016d481"
+
+[[projects]]
+  branch = "master"
   name = "github.com/getlantern/context"
   packages = ["."]
   revision = "624d99b1798d7c5375ea1d3ca4c5b04d58f7c775"
@@ -64,6 +70,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "1b2299c074709bbb5f76841184e7ddd0ba7ef997da49484f6524ab64f146d0d1"
+  inputs-digest = "820c9974a1bb34ce019c4dc7b57e53220445f5874971490af15d36c746bcc4d5"
   solver-name = "gps-cdcl"
   solver-version = 1
