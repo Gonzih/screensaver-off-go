@@ -48,40 +48,41 @@ func onReady() {
 	systray.SetTitle("Disable xscreensaver")
 	systray.SetTooltip("Disable xscreensaver")
 	mToggle := systray.AddMenuItem("Disable", "Disable")
-
-	go func() {
-		for {
-			<-mToggle.ClickedCh
-
-			disableScreensaverLock.Lock()
-			disableScreensaver = !disableScreensaver
-			disableScreensaverLock.Unlock()
-
-			disableScreensaverLock.RLock()
-
-			if disableScreensaver {
-				mToggle.Check()
-				mToggle.SetTitle("Enable")
-				systray.SetIcon(icons.IconEmpty)
-			} else {
-				mToggle.Uncheck()
-				mToggle.SetTitle("Disable")
-				systray.SetIcon(icons.IconFull)
-			}
-
-			disableScreensaverLock.RUnlock()
-		}
-	}()
-
 	mQuit := systray.AddMenuItem("Quit", "Quit screensaver-off")
 
 	go func() {
-		<-mQuit.ClickedCh
-		os.Exit(0)
+		for {
+			select {
+			case <-mToggle.ClickedCh:
+
+				disableScreensaverLock.Lock()
+				disableScreensaver = !disableScreensaver
+				disableScreensaverLock.Unlock()
+
+				disableScreensaverLock.RLock()
+
+				if disableScreensaver {
+					mToggle.Check()
+					mToggle.SetTitle("Enable")
+					systray.SetIcon(icons.IconEmpty)
+				} else {
+					mToggle.Uncheck()
+					mToggle.SetTitle("Disable")
+					systray.SetIcon(icons.IconFull)
+				}
+
+				disableScreensaverLock.RUnlock()
+
+			case <-mQuit.ClickedCh:
+				systray.Quit()
+				break
+			}
+		}
 	}()
 
 	log.Println("Ready!")
 }
 
 func onExit() {
+	os.Exit(0)
 }
