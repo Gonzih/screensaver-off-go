@@ -7,6 +7,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/Gonzih/screensaver-off-go/icons"
 	"github.com/getlantern/systray"
 )
 
@@ -44,7 +45,7 @@ func main() {
 }
 
 func onReady() {
-	systray.SetIcon(IconEmpty)
+	systray.SetIcon(icons.IconEmpty)
 	systray.SetTitle("Disable xscreensaver")
 	systray.SetTooltip("Disable xscreensaver")
 	mToggle := systray.AddMenuItem("Disable", "Disable")
@@ -64,11 +65,11 @@ func onReady() {
 				if disableScreensaver {
 					mToggle.Check()
 					mToggle.SetTitle("Enable")
-					systray.SetIcon(IconEmpty)
+					systray.SetIcon(icons.IconEmpty)
 				} else {
 					mToggle.Uncheck()
 					mToggle.SetTitle("Disable")
-					systray.SetIcon(IconFull)
+					systray.SetIcon(icons.IconFull)
 				}
 
 				disableScreensaverLock.RUnlock()
