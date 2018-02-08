@@ -65,11 +65,11 @@ func onReady() {
 				if disableScreensaver {
 					mToggle.Check()
 					mToggle.SetTitle("Enable")
-					systray.SetIcon(icons.IconEmpty)
+					systray.SetIcon(icons.IconFull)
 				} else {
 					mToggle.Uncheck()
 					mToggle.SetTitle("Disable")
-					systray.SetIcon(icons.IconFull)
+					systray.SetIcon(icons.IconEmpty)
 				}
 
 				disableScreensaverLock.RUnlock()
