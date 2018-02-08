@@ -5,7 +5,7 @@
   branch = "master"
   name = "github.com/Gonzih/screensaver-off-go"
   packages = ["icons"]
-  revision = "3ab4fb453dc982af590acbed3c525a7d87eb3228"
+  revision = "9570fb68bc4dc5ab859b01fac38cc9c0015d14c0"
 
 [[projects]]
   branch = "master"
