@@ -1,39 +1,25 @@
 package main
 
 import (
-	"flag"
 	"log"
 	"regexp"
+
+	"github.com/spf13/pflag"
 )
 
-type stringArrayFlag []string
-
-func (i *stringArrayFlag) String() string {
-	return "my string representation"
-}
-
-func (i *stringArrayFlag) Set(value string) error {
-	*i = append(*i, value)
-	return nil
-}
-
-var patternsToMatch stringArrayFlag
+var patternsToMatch []string
 var regexpsToMatch []*regexp.Regexp
 var screensaverDisableDelay int
 
 func init() {
-	initFlags()
+	pflag.StringArrayVar(&patternsToMatch, "match", []string{}, "Regexps to match processes on")
+	pflag.IntVar(&screensaverDisableDelay, "delay", 30, "Disable delay in seconds")
+	pflag.Parse()
 
 	if err := initRegexps(); err != nil {
 		log.Fatal(err)
 	}
 
-}
-
-func initFlags() {
-	flag.Var(&patternsToMatch, "match", "Regexp to match processes on")
-	flag.IntVar(&screensaverDisableDelay, "delay", 30, "Disable delay in seconds")
-	flag.Parse()
 }
 
 func initRegexps() (err error) {
