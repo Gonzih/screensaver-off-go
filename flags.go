@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"log"
 	"regexp"
 )
 
@@ -19,6 +20,15 @@ func (i *stringArrayFlag) Set(value string) error {
 var patternsToMatch stringArrayFlag
 var regexpsToMatch []*regexp.Regexp
 var screensaverDisableDelay int
+
+func init() {
+	initFlags()
+
+	if err := initRegexps(); err != nil {
+		log.Fatal(err)
+	}
+
+}
 
 func initFlags() {
 	flag.Var(&patternsToMatch, "match", "Regexp to match processes on")

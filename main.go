@@ -99,12 +99,6 @@ func procObserverLoop() {
 }
 
 func init() {
-	initFlags()
-
-	if err := initRegexps(); err != nil {
-		log.Fatal(err)
-	}
-
 	stateChangeNotification = make(chan bool, 10)
 }
 
