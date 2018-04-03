@@ -39,7 +39,7 @@ func isAnyProcessMatching() bool {
 			name, err = proc.Name()
 			if err != nil {
 				log.Infof("Error getting process name: %s", err)
-				return false
+				continue
 			}
 
 			matched = matchesAnyRegexp(name)
