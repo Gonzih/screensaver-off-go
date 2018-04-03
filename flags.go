@@ -7,9 +7,11 @@ import (
 	"github.com/spf13/pflag"
 )
 
-var patternsToMatch []string
-var regexpsToMatch []*regexp.Regexp
-var screensaverDisableDelay int
+var (
+	patternsToMatch         []string
+	regexpsToMatch          []*regexp.Regexp
+	screensaverDisableDelay int
+)
 
 func init() {
 	pflag.StringArrayVar(&patternsToMatch, "match", []string{}, "Regexps to match processes on")
