@@ -2,7 +2,6 @@ package main
 
 import (
 	"os"
-	"os/exec"
 	"sync"
 	"time"
 
@@ -10,7 +9,6 @@ import (
 
 	"github.com/Gonzih/screensaver-off-go/icons"
 	"github.com/getlantern/systray"
-	"github.com/shirou/gopsutil/process"
 )
 
 type appState struct {
@@ -23,52 +21,6 @@ var (
 	stateLock               sync.RWMutex
 	stateChangeNotification chan bool
 )
-
-func isAnyProcessMatching() bool {
-	if len(regexpsToMatch) > 0 {
-		procs, err := process.Processes()
-		if err != nil {
-			log.Infof("Error getting processes: %s", err)
-			return false
-		}
-
-		var matched bool
-		var name string
-
-		for _, proc := range procs {
-			name, err = proc.Name()
-			if err != nil {
-				log.Infof("Error getting process name: %s", err)
-				continue
-			}
-
-			matched = matchesAnyRegexp(name)
-			if matched {
-				log.Infof(`Found a matching proc "%s"`, name)
-				return matched
-			}
-		}
-	}
-
-	return false
-
-}
-
-func tryToDisable() {
-	stateLock.RLock()
-	defer stateLock.RUnlock()
-
-	if state.manuallyDisabled || state.automaticallyDisabled {
-		log.Info("Trying to disable xscreensaver")
-		cmd := exec.Command("/usr/bin/xscreensaver-command", "-deactivate")
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-		err := cmd.Run()
-		if err != nil {
-			log.Errorf("Error executing xscreensaver-command: %s", err)
-		}
-	}
-}
 
 func screensaverLoop() {
 	log.Info("Starting screensaver loop")
