@@ -1,4 +1,5 @@
-//go:generate go run -tags=dev icons_generate.go
+// +build dev
+
 package icons
 
 import "net/http"

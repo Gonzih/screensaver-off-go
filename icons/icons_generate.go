@@ -11,6 +11,7 @@ import (
 
 func main() {
 	err := vfsgen.Generate(icons.Assets, vfsgen.Options{
+		Filename:     "icons/icons_vfsdata.go",
 		PackageName:  "icons",
 		BuildTags:    "!dev",
 		VariableName: "Assets",
