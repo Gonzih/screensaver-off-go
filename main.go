@@ -3,7 +3,6 @@
 package main
 
 import (
-	"io/ioutil"
 	"os"
 	"sync"
 	"time"
@@ -53,20 +52,12 @@ func procObserverLoop() {
 	}
 }
 
-var fullIcon []byte
-var emptyIcon []byte
+const (
+	fullIcon  = "caffeine-cup-full.svg"
+	emptyIcon = "caffeine-cup-empty.svg"
+)
 
 func init() {
-	emptyFile, err := icons.Assets.Open("caffeine-cup-empty.svg")
-	must(err)
-	emptyIcon, err = ioutil.ReadAll(emptyFile)
-	must(err)
-
-	fullFile, err := icons.Assets.Open("caffeine-cup-full.svg")
-	must(err)
-	fullIcon, err = ioutil.ReadAll(fullFile)
-	must(err)
-
 	stateChangeNotification = make(chan bool, 10)
 }
 
@@ -84,7 +75,7 @@ func onReady() {
 	go screensaverLoop()
 	go procObserverLoop()
 
-	systray.SetIcon(emptyIcon)
+	systray.SetIcon(icons.ReadBytes(emptyIcon))
 	systray.SetTitle("Disable xscreensaver")
 	systray.SetTooltip("Disable xscreensaver")
 	mToggle := systray.AddMenuItem("Disable", "Disable")
@@ -98,11 +89,11 @@ func onReady() {
 			if state.manuallyDisabled || state.automaticallyDisabled {
 				mToggle.Check()
 				mToggle.SetTitle("Enable")
-				systray.SetIcon(fullIcon)
+				systray.SetIcon(icons.ReadBytes(fullIcon))
 			} else {
 				mToggle.Uncheck()
 				mToggle.SetTitle("Disable")
-				systray.SetIcon(emptyIcon)
+				systray.SetIcon(icons.ReadBytes(emptyIcon))
 			}
 
 			stateLock.RUnlock()
