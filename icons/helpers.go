@@ -1,4 +1,4 @@
-//go:generate go run -tags=dev icons/icons_generate.go
+//go:generate go run -tags=dev icons_generate.go
 
 package icons
 
