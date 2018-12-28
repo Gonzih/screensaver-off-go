@@ -7,8 +7,7 @@ before_install:
   - sudo apt-get install -y libgtk-3-dev libappindicator3-dev
 
 install:
-  - go get -u golang.org/x/vgo
-  - go get -u github.com/shurcooL/vfsgen
-  - vgo generate
+  - go generate
+  - go build
 
-script: vgo build
+script: go install
